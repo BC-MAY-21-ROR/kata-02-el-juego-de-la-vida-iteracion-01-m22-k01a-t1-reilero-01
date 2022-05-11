@@ -5,15 +5,22 @@ end
 
 def create_matriz(a, b)
   new_matriz = Array.new(a) { Array.new(b) {  } }
+  modify_matriz = Array.new(a) { Array.new(b) {  } }
 
   print "Generacion 1 \n"
   creating_matriz = Array.new(a) { Array.new(b) { random } }
   creating_matriz.each do |a|
-    print a
+    a.each do |b|
+      if b == 0
+        print ". "
+      else
+        print "* "
+      end
+    end 
     print "\n"
   end
 
- creating_matriz.each_with_index.map do |array, index_array|
+  creating_matriz.each_with_index.map do |array, index_array|
     array.each_with_index.map do |celula, index_celula|
       right = []
       left = []
@@ -61,28 +68,38 @@ def create_matriz(a, b)
       if celula==1
         if  total_neighboors<2 || total_neighboors>3
           new_matriz[index_array][index_celula]=0
+          modify_matriz[index_array][index_celula]="."
         elsif total_neighboors==2 || total_neighboors==3
           new_matriz[index_array][index_celula]=1
+          modify_matriz[index_array][index_celula]="*"
         end
       else #celula==0
         if total_neighboors==3
           new_matriz[index_array][index_celula]=1
+          modify_matriz[index_array][index_celula]="*"
         else
           new_matriz[index_array][index_celula]=0
+          modify_matriz[index_array][index_celula]="."
+
         end
       end
-      
-    end
-    
   end
 
-  #Print new matriz (Generation 2)s
+
+end
+
+
+#Print new matriz (Generation 2)s
   print "Generacion 2 \n"
-  new_matriz.each do |a|
-    print a
+  # new_matriz.each do |a|
+  #   print a
+  #   print "\n"
+  # end
+  modify_matriz.each do |a|
+    print a.join(" ")
     print "\n"
   end
-   
 end
+
 
 create_matriz(4, 4)
